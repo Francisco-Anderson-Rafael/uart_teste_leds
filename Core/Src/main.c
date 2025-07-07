@@ -102,6 +102,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   // Opcional: Acenda ou apague o LED no início para indicar estado inicial
   HAL_GPIO_WritePin(ld2_GPIO_Port, ld2_Pin, GPIO_PIN_RESET); // LED começa apagado
+  HAL_GPIO_WritePin(ld3_GPIO_Port, ld3_Pin, GPIO_PIN_RESET); // LED começa apagado
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -119,29 +120,40 @@ int main(void)
 	      switch (rx_data)
 	      {
 	        case '1':
-	          printf(">> Opcao 1: LED ACESO!\r\n");
+	          printf(">> Opcao 1: LED VERMELHO ACESO!\r\n");
 	          HAL_GPIO_WritePin(ld2_GPIO_Port, ld2_Pin, GPIO_PIN_SET); // Acende o LED
 	          led_mode = 1; // Define o modo LED ON
 	          break;
 
 	        case '2':
-	          printf(">> Opcao 2: LED APAGADO!\r\n");
+	          printf(">> Opcao 2: LED VRMELHO APAGADO!\r\n");
 	          HAL_GPIO_WritePin(ld2_GPIO_Port, ld2_Pin, GPIO_PIN_RESET); // Apaga o LED
 	          led_mode = 0; // Define o modo LED OFF
 	          break;
 
 	        case '3':
-	          printf(">> Opcao 3: LED PISCANDO CONTINUAMENTE! Pressione outra tecla para parar.\r\n");
+	          printf(">> Opcao 3: LED VERDE PISCANDO CONTINUAMENTE! Pressione outra tecla para parar.\r\n");
 	          led_mode = 2; // Define o modo LED PISCANDO
 	          last_blink_time = HAL_GetTick(); // Reseta o timer do pisca-pisca
 	          break;
 
 	        case '4':
-	          printf(">> Incremento de 10%% por botao. (Funcionalidade a implementar)\r\n");
-	          // Certifica-se de que o LED não esteja piscando ou aceso/apagado por outras opções
-	          HAL_GPIO_WritePin(ld2_GPIO_Port, ld2_Pin, GPIO_PIN_RESET);
-	          led_mode = 0;
-	          break;
+	        	          printf(">> Opcao 1: LED LARANJA ACESO!\r\n");
+	        	          HAL_GPIO_WritePin(ld3_GPIO_Port, ld3_Pin, GPIO_PIN_SET); // Acende o LED
+	        	          led_mode = 1; // Define o modo LED ON
+	        	          break;
+
+	        	  case '5':
+	        	          printf(">> Opcao 2: LED LARANJA APAGADO!\r\n");
+	        	          HAL_GPIO_WritePin(ld3_GPIO_Port, ld3_Pin, GPIO_PIN_RESET); // Apaga o LED
+	        	          led_mode = 0; // Define o modo LED OFF
+	        	          break;
+
+	        	  case '6':
+	        	              printf(">> Opcao 6: LED VERDE APAGADO E PISCA-PISCA INTERROMPIDO!\r\n");
+	        	              HAL_GPIO_WritePin(ld1_GPIO_Port, ld1_Pin, GPIO_PIN_RESET); // Garante que o LED verde está apagado
+	        	              led_mode = 0; // Sai do modo pisca-pisca (define para um valor que não é 2)
+	        	              break;
 
 	        default:
 	          printf(">> Opcao invalida. Tente novamente.\r\n");
@@ -158,10 +170,11 @@ int main(void)
         // Lógica para piscar o LED se o modo for 2
         if (led_mode == 2) {
             if (HAL_GetTick() - last_blink_time >= BLINK_DELAY_MS) {
-                HAL_GPIO_TogglePin(ld1_GPIO_Port, ld1_Pin); // Inverte o estado do LED
+                HAL_GPIO_TogglePin(ld1_GPIO_Port, ld1_Pin);// Inverte o estado do LED
                 last_blink_time = HAL_GetTick();            // Atualiza o tempo da última piscada
             }
         }
+
         // O HAL_Delay(500) aqui pode ser removido, pois o HAL_UART_Receive já tem um timeout.
         // Se você mantiver um delay aqui, ele pode afetar a responsividade do sistema.
         // Se desejar um delay geral para exibir o menu com menos frequência, pode usar um timer.
@@ -205,7 +218,7 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2
-                              |RCC_CLOCKTYPE_D3PCLK1|RCC_CLOCKTYPE_D1PCLK1; // <<-- Linha corrigida aqui
+                              |RCC_CLOCKTYPE_D3PCLK1|RCC_CLOCKTYPE_D1PCLK1;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;
@@ -284,7 +297,7 @@ void Error_Handler(void)
 #ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
-  * where the assert_param error has occurred.
+  *         where the assert_param error has occurred.
   * @param  file: pointer to the source file name
   * @param  line: assert_param error line source number
   * @retval None
