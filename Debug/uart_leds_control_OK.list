@@ -1,5 +1,5 @@
 
-uart_teste.elf:     file format elf32-littlearm
+uart_leds_control_OK.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn

@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := uart_teste
+BUILD_ARTIFACT_NAME := uart_leds_control_OK
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-uart_teste.elf \
+uart_leds_control_OK.elf \
 
 MAP_FILES += \
-uart_teste.map \
+uart_leds_control_OK.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-uart_teste.list \
+uart_leds_control_OK.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: uart_teste.elf secondary-outputs
+main-build: uart_leds_control_OK.elf secondary-outputs
 
 # Tool invocations
-uart_teste.elf uart_teste.map: $(OBJS) $(USER_OBJS) C:\Users\tiago\OneDrive\Área\ de\ Trabalho\rafael\PROJETOSSTM32\uart_teste\STM32H753ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "uart_teste.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\tiago\OneDrive\Área de Trabalho\rafael\PROJETOSSTM32\uart_teste\STM32H753ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="uart_teste.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+uart_leds_control_OK.elf uart_leds_control_OK.map: $(OBJS) $(USER_OBJS) C:\Users\tiago\OneDrive\Área\ de\ Trabalho\rafael\PROJETOSSTM32\uart_teste\STM32H753ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "uart_leds_control_OK.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\tiago\OneDrive\Área de Trabalho\rafael\PROJETOSSTM32\uart_teste\STM32H753ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="uart_leds_control_OK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-uart_teste.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "uart_teste.list"
+uart_leds_control_OK.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "uart_leds_control_OK.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout uart_teste.elf uart_teste.list uart_teste.map
+	-$(RM) default.size.stdout uart_leds_control_OK.elf uart_leds_control_OK.list uart_leds_control_OK.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
